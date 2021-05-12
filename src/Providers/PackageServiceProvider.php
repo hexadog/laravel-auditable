@@ -11,12 +11,12 @@ class PackageServiceProvider extends ServiceProvider
     /**
      * Our root directory for this package to make traversal easier.
      */
-    const PACKAGE_DIR = __DIR__.'/../../';
+    public const PACKAGE_DIR = __DIR__.'/../../';
 
     /**
      * Name for this package to publish assets.
      */
-    const PACKAGE_NAME = 'auditable';
+    public const PACKAGE_NAME = 'auditable';
 
     /**
      * Bootstrap the application events.
