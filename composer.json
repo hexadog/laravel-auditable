@@ -1,0 +1,46 @@
+{
+    "name": "hexadog/laravel-auditable",
+    "description": "Know who manipulates your models in your Laravel application.",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/hexadog/laravel-auditable/issues",
+        "source": "https://github.com/hexadog/laravel-auditable"
+    },
+    "authors": [{
+        "name": "Gaetan",
+        "email": "gaetan@hexadog.com"
+    }],
+    "minimum-stability": "stable",
+    "require": {
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.19",
+        "squizlabs/php_codesniffer": "3.*",
+        "phpunit/phpunit": "^7.0|^8.0|^9.0",
+        "orchestra/testbench": "~5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hexadog\\Auditable\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hexadog\\Auditable\\Test\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hexadog\\Auditable\\Providers\\PackageServiceProvider"
+            ],
+            "dont-discover": []
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test:windows": "vendor\\bin\\phpunit",
+        "check-style": "vendor/bin/phpcs --extensions=php ./src",
+        "fix-style": "vendor/bin/php-cs-fixer fix"
+    }
+}
