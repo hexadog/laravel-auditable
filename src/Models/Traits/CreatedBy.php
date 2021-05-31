@@ -27,7 +27,9 @@ trait CreatedBy
             $userClass = config('auditable.models.user');
             $userId = $user instanceof $userClass ? $user->getKey() : $user;
 
-            $this->attributes['created_by'] = $userId;
+            if (!is_null($userId)) {
+                $this->attributes['created_by'] = $userId;
+            }
         }
 
         return $this;

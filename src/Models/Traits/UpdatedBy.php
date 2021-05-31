@@ -16,7 +16,6 @@ trait UpdatedBy
     /**
      * Set the value of the "updated by" attribute.
      *
-     * @param mixed $value
      * @param mixed $user
      *
      * @return $this
@@ -27,7 +26,9 @@ trait UpdatedBy
             $userClass = config('auditable.models.user');
             $userId = $user instanceof $userClass ? $user->getKey() : $user;
 
-            $this->attributes['updated_by'] = $userId;
+            if (!is_null($userId)) {
+                $this->attributes['updated_by'] = $userId;
+            }
         }
 
         return $this;
