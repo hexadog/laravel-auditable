@@ -16,7 +16,6 @@ trait DeletedBy
     /**
      * Set the value of the "deleted by" attribute.
      *
-     * @param mixed $value
      * @param mixed $user
      *
      * @return $this
@@ -29,10 +28,12 @@ trait DeletedBy
             $userClass = config('auditable.models.user');
             $userId = $user instanceof $userClass ? $user->getKey() : $user;
 
-            tap($this)->unsetEventDispatcher()
-                ->forceFill(
-                    ['deleted_by' => $userId]
-                )->save();
+            if (!is_null($userId)) {
+                tap($this)->unsetEventDispatcher()
+                    ->forceFill(
+                        ['deleted_by' => $userId]
+                    )->save();
+            }
 
             $this->setEventDispatcher($events);
         }
