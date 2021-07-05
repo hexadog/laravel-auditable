@@ -28,11 +28,11 @@ trait DeletedBy
             $userClass = config('auditable.models.user');
             $userId = $user instanceof $userClass ? $user->getKey() : $user;
 
+            $this->unsetEventDispatcher();
+
             if (!is_null($userId)) {
-                tap($this)->unsetEventDispatcher()
-                    ->forceFill(
-                        ['deleted_by' => $userId]
-                    )->save();
+                $this->attributes['deleted_by'] = $userId;
+                $this->save();
             }
 
             $this->setEventDispatcher($events);
