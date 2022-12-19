@@ -4,7 +4,6 @@ namespace Hexadog\Auditable\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use ReflectionClass;
 
 class PackageServiceProvider extends ServiceProvider
 {
@@ -44,7 +43,7 @@ class PackageServiceProvider extends ServiceProvider
     protected function getPath($path = '')
     {
         // We get the child class
-        $rc = new ReflectionClass(get_class($this));
+        $rc = new \ReflectionClass(get_class($this));
 
         return dirname($rc->getFileName()) . '/../../' . $path;
     }
