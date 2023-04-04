@@ -3,6 +3,7 @@
 namespace Hexadog\Auditable\Models\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Schema;
 
@@ -20,7 +21,7 @@ trait DeletedBy
      *
      * @return $this
      */
-    public function setDeletedByAttribute($user)
+    public function setDeletedByAttribute(Model|string|int $user)
     {
         if (Schema::hasColumn($this->getTable(), 'deleted_by')) {
             $events = $this->getEventDispatcher();
@@ -41,7 +42,7 @@ trait DeletedBy
         return $this;
     }
 
-    public function scopeOnlyDeletedBy(Builder $builder, $user)
+    public function scopeOnlyDeletedBy(Builder $builder, Model|string|int $user)
     {
         $userClass = config('auditable.models.user');
         $userId = $user instanceof $userClass ? $user->getKey() : $user;
