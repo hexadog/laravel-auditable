@@ -3,6 +3,7 @@
 namespace Hexadog\Auditable\Models\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Schema;
 
@@ -20,7 +21,7 @@ trait UpdatedBy
      *
      * @return $this
      */
-    public function setUpdatedByAttribute($user)
+    public function setUpdatedByAttribute(Model|string|int $user)
     {
         if (Schema::hasColumn($this->getTable(), 'updated_by')) {
             $userClass = config('auditable.models.user');
@@ -34,7 +35,7 @@ trait UpdatedBy
         return $this;
     }
 
-    public function scopeOnlyUpdatedBy(Builder $builder, $user)
+    public function scopeOnlyUpdatedBy(Builder $builder, Model|string|int $user)
     {
         $userClass = config('auditable.models.user');
         $userId = $user instanceof $userClass ? $user->getKey() : $user;
