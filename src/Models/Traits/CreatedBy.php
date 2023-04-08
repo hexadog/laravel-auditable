@@ -2,6 +2,7 @@
 
 namespace Hexadog\Auditable\Models\Traits;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,10 +23,10 @@ trait CreatedBy
      *
      * @return $this
      */
-    public function setCreatedByAttribute(Model|string|int $user)
+    public function setCreatedByAttribute(Model|string|int|null $user)
     {
-        if (Schema::hasColumn($this->getTable(), 'created_by')) {
-            $userClass = config('auditable.models.user');
+        if (!is_null($user) && Schema::hasColumn($this->getTable(), 'created_by')) {
+            $userClass = config('auditable.models.user', User::class);
             $userId = $user instanceof $userClass ? $user->getKey() : $user;
 
             if (!is_null($userId)) {
