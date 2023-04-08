@@ -2,6 +2,7 @@
 
 namespace Hexadog\Auditable\Models\Traits;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,7 +27,7 @@ trait DeletedBy
         if (Schema::hasColumn($this->getTable(), 'deleted_by')) {
             $events = $this->getEventDispatcher();
 
-            $userClass = config('auditable.models.user');
+            $userClass = config('auditable.models.user', User::class);
             $userId = $user instanceof $userClass ? $user->getKey() : $user;
 
             $this->unsetEventDispatcher();
