@@ -97,6 +97,9 @@ $post->deletedBy;
 $post->deleted_at;
 ```
 
+## Log changes
+To log changes you can use [spatie/laravel-activitylog](https://github.com/spatie/laravel-activitylog) package.
+
 <!-- omit in toc -->
 ## Credits
 - Logo made by [BeyondCode](https://banners.beyondco.de/)
