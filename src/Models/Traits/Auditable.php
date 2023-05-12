@@ -107,7 +107,7 @@ trait Auditable
         if (Schema::hasColumn($this->getTable(), 'created_by')) {
             $userId = $this->getAuthenticatedUserId();
 
-            if (!is_null($userId)) {
+            if (! is_null($userId)) {
                 $this->attributes['created_by'] = $userId;
             }
         }
@@ -125,7 +125,7 @@ trait Auditable
         if (Schema::hasColumn($this->getTable(), $updatedBy)) {
             $userId = $this->getAuthenticatedUserId();
 
-            if (!is_null($userId) && !$this->isDirty($updatedBy)) {
+            if (! is_null($userId) && ! $this->isDirty($updatedBy)) {
                 $this->attributes[$updatedBy] = $userId;
             }
         }
@@ -146,7 +146,7 @@ trait Auditable
 
             $this->unsetEventDispatcher();
 
-            if (!is_null($userId)) {
+            if (! is_null($userId)) {
                 $this->attributes[$deletedBy] = $userId;
 
                 $this->save();
