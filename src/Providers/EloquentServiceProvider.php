@@ -13,11 +13,24 @@ class EloquentServiceProvider extends ServiceProvider
     public function boot()
     {
         Blueprint::macro('auditable', function () {
-            $this->unsignedBigInteger('created_by')->nullable()->index();
+            switch (config('auditable.primary_key_type', 'id')) {
+                case 'id':
+                default:
+                    $primaryType = 'unsignedBigInteger';
+                    break;
+                case 'uuid':
+                    $primaryType = 'uuid';
+                    break;
+                case 'ulid':
+                    $primaryType = 'ulid';
+                    break;
+            }
+
+            $this->$primaryType('created_by')->nullable()->index();
             $this->timestamp('created_at')->nullable()->index();
-            $this->unsignedBigInteger('updated_by')->nullable()->index();
+            $this->$primaryType('updated_by')->nullable()->index();
             $this->timestamp('updated_at')->nullable()->index();
-            $this->unsignedBigInteger('deleted_by')->nullable()->index();
+            $this->$primaryType('deleted_by')->nullable()->index();
             $this->timestamp('deleted_at')->nullable()->index();
         });
 

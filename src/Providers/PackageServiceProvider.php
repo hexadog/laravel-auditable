@@ -18,17 +18,27 @@ class PackageServiceProvider extends ServiceProvider
     public const PACKAGE_NAME = 'auditable';
 
     /**
+     * Bootstrap the application events.
+     */
+    public function boot()
+    {
+        $this->strapPublishers();
+    }
+
+    /**
      * Register the application services.
      */
     public function register(): void
     {
+        $this->registerConfigs();
+
         $this->app->register(EloquentServiceProvider::class);
     }
 
     /**
      * Get Package absolute path.
      *
-     * @param  string  $path
+     * @param string $path
      */
     protected function getPath($path = '')
     {
@@ -41,10 +51,35 @@ class PackageServiceProvider extends ServiceProvider
     /**
      * Get Module normalized namespace.
      *
-     * @param  mixed  $prefix
+     * @param mixed $prefix
      */
     protected function getNormalizedNamespace($prefix = '')
     {
         return Str::start(Str::lower(self::PACKAGE_NAME), $prefix);
+    }
+
+    /**
+     * Register our Configs.
+     */
+    protected function registerConfigs(): void
+    {
+        $configPath = $this->getPath('config');
+
+        $this->mergeConfigFrom(
+            "{$configPath}/config.php",
+            $this->getNormalizedNamespace()
+        );
+    }
+
+    /**
+     * Bootstrap our Publishers.
+     */
+    protected function strapPublishers(): void
+    {
+        $configPath = $this->getPath('config');
+
+        $this->publishes([
+            "{$configPath}/config.php" => config_path($this->getNormalizedNamespace() . '.php'),
+        ], $this->getNormalizedNamespace() . '-config');
     }
 }
