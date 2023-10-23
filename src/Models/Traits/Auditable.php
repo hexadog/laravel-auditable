@@ -175,7 +175,7 @@ trait Auditable
     {
         $updatedBy = $this->getUpdatedByColumn();
 
-        if ($this->getAuthenticatedUserId() && $this->$updatedBy != $this->getAuthenticatedUserId()) {
+        if ($this->getAuthenticatedUserId() && $this->getAuthenticatedUserId() != $this->$updatedBy) {
             $this->$updatedBy = $this->getAuthenticatedUserId();
 
             $this->save();
